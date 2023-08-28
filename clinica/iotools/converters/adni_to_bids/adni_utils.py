@@ -915,7 +915,7 @@ def _is_visit_code_not_supported(visit_code: str) -> bool:
 
 
 def create_adni_sessions_dict(
-    bids_ids, clinic_specs_path, clinical_data_dir, bids_subjs_paths
+    bids_ids, clinic_specs_path, clinical_data_dir, bids_subjs_paths, session_prefix=r"ses-M\d+"
 ):
     """Extract all the data required for the sessions files and organize them in a dictionary.
 
@@ -982,7 +982,7 @@ def create_adni_sessions_dict(
     # Nv/None refer to sessions whose session is undefined. "sc" is the screening session with unreliable (incomplete)
     # data.
     df_subj_session = df_subj_session[
-        df_subj_session.session_id.str.contains(r"ses-M\d+")
+        df_subj_session.session_id.str.contains(session_prefix)
     ]
     write_adni_sessions_tsv(df_subj_session, bids_subjs_paths)
 
